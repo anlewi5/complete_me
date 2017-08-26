@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+# coverage/index.html to view
 gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
