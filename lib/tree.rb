@@ -27,10 +27,15 @@ class Tree
   end
 
   def position_of_letters(total_word, letters, head, last, count, letter)
-    if head.children.has_key?(letter) && count != last
+    if head.children.has_key?(letter) && count == last
+      head.children[letter].term = total_word
+      head.children[letter].word = true
+      @count += 1
+    elsif head.children.has_key?(letter) && count != last
       insert_letters(total_word, letters, head.children[letter], last, count)
     elsif count != last
-      head.children[letter] = Node.new
+      current = Node.new
+      head.children[letter] = current
       insert_letters(total_word, letters, head.children[letter], last, count)
     else
       last_letter(total_word, letter, head)
@@ -49,7 +54,9 @@ class Tree
     letters = split_word(prefix)
     last = letters.length
     start_node = prefix_finder(letters, last, @head)
-    term_finder(start_node)
+    suggestions = []
+    suggestions << start_node.term if start_node.word
+    term_finder(start_node, suggestions)
   end
 
   def prefix_finder(letters, last, current, count = 0)
@@ -62,7 +69,7 @@ class Tree
     end
   end
 
-  def term_finder(start_node, suggestions = [])
+  def term_finder(start_node, suggestions)
     start_node.children.each_value do |value|
       if value.word && !value.children.empty?
         suggestions << value.term
@@ -92,3 +99,9 @@ class Tree
     @count
   end
 end
+tree = Tree.new
+# tree.insert("pizza")
+# tree.insert("aardvark")
+# tree.insert("zombies")
+# tree.insert("a")
+# tree.insert("xylophones")
