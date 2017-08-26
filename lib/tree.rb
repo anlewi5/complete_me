@@ -14,31 +14,66 @@ class Tree
 
   def insert(word)
     letters = split_word(word)
-    total_words = ""
+    total_word = ""
     last = letters.length
-    insert_letters(total_words, letters, @head, last)
+    insert_letters(total_word, letters, @head, last)
   end
 
-  def insert_letters(total_words, letters, head, last, count = 0)
+  def insert_letters(total_word, letters, head, last, count = 0, letter = nil )
     count += 1
     letter = letters.shift
-    total_words << letter
+    total_word << letter
+    position_of_letters(total_word, letters, head, last, count, letter)
+  end
+
+  def position_of_letters(total_word, letters, head, last, count, letter)
     if head.children.has_key?(letter) && count != last
-      insert_letters(total_words, letters, head.children[letter], last, count)
+      insert_letters(total_word, letters, head.children[letter], last, count)
     elsif count != last
       head.children[letter] = Node.new
-      insert_letters(total_words, letters, head.children[letter], last, count)
+      insert_letters(total_word, letters, head.children[letter], last, count)
     else
-      current = Node.new
-      head.children[letter] = current
-      current.word = true
-      current.term = total_words
-      @count += 1
+      last_letter(total_word, letter, head)
     end
   end
 
-  def suggest(prefix)
+  def last_letter(total_word, letter, head)
+    current = Node.new
+    head.children[letter] = current
+    current.word = true
+    current.term = total_word
+    @count += 1
+  end
 
+  def suggest(prefix)
+    letters = split_word(prefix)
+    last = letters.length
+    start_node = prefix_finder(letters, last, @head)
+    term_finder(start_node)
+  end
+
+  def prefix_finder(letters, last, current, count = 0)
+    count += 1
+    letter = letters.shift
+    if count != last
+      prefix_finder(letters, last, current.children[letter], count)
+    else
+      current.children[letter]
+    end
+  end
+
+  def term_finder(start_node, suggestions = [])
+    start_node.children.each_value do |value|
+      if value.word && !value.children.empty?
+        suggestions << value.term
+        term_finder(value, suggestions)
+      elsif !value.word
+        term_finder(value, suggestions)
+      else
+        suggestions << value.term
+      end
+    end
+    suggestions
   end
 
   def select(prefix, selected_word)
@@ -57,8 +92,3 @@ class Tree
     @count
   end
 end
-# binding.pry
-tree = Tree.new
-
-# p tree.insert("")
-# tree.insert("artem")
