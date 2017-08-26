@@ -1,11 +1,11 @@
 class Node
   attr_accessor :word,
-                :letter,
+                :term,
                 :children
-  def initialize(letter)
+  def initialize
     @word = false
-    @letter = letter
-    @children = []
+    @term = term
+    @children = {}
   end
 
 end
