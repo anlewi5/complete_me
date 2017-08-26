@@ -84,7 +84,11 @@ class Tree
   end
 
   def select(prefix, selected_word)
-
+    count = 1
+    letters = split_word(prefix)
+    last = letters.length
+    start_node = prefix_finder(letters, last, @head)
+    start_node[prefix] = []
   end
 
   def count
