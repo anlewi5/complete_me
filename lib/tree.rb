@@ -99,9 +99,3 @@ class Tree
     @count
   end
 end
-tree = Tree.new
-# tree.insert("pizza")
-# tree.insert("aardvark")
-# tree.insert("zombies")
-# tree.insert("a")
-# tree.insert("xylophones")
