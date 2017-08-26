@@ -29,7 +29,7 @@ class TestCompleteMe < Minitest::Test
   end
 
   def test_suggest_suggests_completions_for_substring
-
+    
   end
 
   def test_select_adds_preferred_selection_to_begining_of_suggestions
