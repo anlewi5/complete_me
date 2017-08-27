@@ -1,4 +1,5 @@
 require_relative './node'
+require 'pry'
 
 class CompleteMe
 
@@ -55,7 +56,8 @@ class CompleteMe
     letters = split_word(prefix)
     last = letters.length
     start_node = prefix_finder(letters, last, @head)
-    suggestions = []
+    binding.pry
+    suggestions = [] + ordered_suggestions(prefix)
     suggestions << start_node.term if start_node.word
     term_finder(start_node, suggestions)
   end
@@ -81,7 +83,7 @@ class CompleteMe
         suggestions << value.term
       end
     end
-    suggestions
+    suggestions.uniq!
   end
 
   def select(prefix, selected_word)
@@ -89,6 +91,21 @@ class CompleteMe
     last = letters.length
     prefix_node = prefix_finder(letters, last, @head)
     prefix_node.search_node_for_prefix(prefix, selected_word)
+  end
+
+  def ordered_suggestions(prefix)
+    letters = split_word(prefix)
+    last = letters.length
+    prefix_node = prefix_finder(letters, last, @head)
+    if prefix_node.select.empty? || prefix_node.select[prefix].nil?
+      []
+    else
+      sorted = prefix_node.select[prefix].map do |word|
+        word.sort { |a| a[0]}
+      end
+      sorted = sorted.map { |word| word[0]}
+      sorted.flatten!
+    end
   end
 
   def first_use_of_word(prefix, selected_word)
