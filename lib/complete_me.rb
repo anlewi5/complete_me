@@ -2,7 +2,6 @@ require_relative './node'
 require 'pry'
 
 class CompleteMe
-
   attr_accessor :head
 
   def initialize
@@ -56,10 +55,18 @@ class CompleteMe
     letters = split_word(prefix)
     last = letters.length
     start_node = prefix_finder(letters, last, @head)
-    binding.pry
-    suggestions = [] + ordered_suggestions(prefix)
+    suggestions = []
+    suggestions << add_suggestions(start_node, prefix) if !start_node.selected.empty?
     suggestions << start_node.term if start_node.word
-    term_finder(start_node, suggestions)
+    term_finder(start_node, suggestions).flatten.uniq
+  end
+
+  def add_suggestions(start_node, prefix)
+    sorted_selection = start_node.selected[prefix].sort{|a| a[0]}
+    sorted_selection = sorted_selection.map do |array|
+      array[1]
+    end
+    sorted_selection.reverse
   end
 
   def prefix_finder(letters, last, current, count = 0)
@@ -83,58 +90,32 @@ class CompleteMe
         suggestions << value.term
       end
     end
-    suggestions.uniq!
+    suggestions
   end
 
   def select(prefix, selected_word)
     letters = split_word(prefix)
-<<<<<<< HEAD
-    last_letter = letters.length
-    start_node = prefix_finder(letters, last, current, count)
-    
-=======
     last = letters.length
-    prefix_node = prefix_finder(letters, last, @head)
-    prefix_node.search_node_for_prefix(prefix, selected_word)
+    start_node = prefix_finder(letters, last, @head)
+    start_node.selected[prefix] = search_for_selected_words(prefix, start_node, selected_word)
   end
 
-  def ordered_suggestions(prefix)
-    letters = split_word(prefix)
-    last = letters.length
-    prefix_node = prefix_finder(letters, last, @head)
-    if prefix_node.select.empty? || prefix_node.select[prefix].nil?
-      []
+  def search_for_selected_words(prefix, start_node, selected_word)
+    if start_node.selected.has_key?(prefix)
+      selection = times_selected(prefix, start_node, selected_word)
     else
-      sorted = prefix_node.select[prefix].map do |word|
-        word.sort { |a| a[0]}
-      end
-      sorted = sorted.map { |word| word[0]}
-      sorted.flatten!
+      start_node.selected[prefix] = [[1, selected_word]]
     end
   end
 
-  def first_use_of_word(prefix, selected_word)
-    select[prefix] = [[1, selected_word]]
-  end
-
-  def search_for_word(prefix, selected_word)
-    word_exists = false
-    select[prefix].map! do |word|
-      if selected_word == word[1]
-        word[0] += 1
-        word_exists = true
+  def times_selected(prefix, start_node, selected_word)
+    start_node = start_node.selected[prefix].each do |pre|
+      if pre.include?(selected_word)
+        pre[0] += 1
+      elsif start_node.selected[prefix][-1] == pre
+        start_node.selected[prefix] << [0, selected_word]
       end
     end
-    first_use_of_word(prefix, selected_word) if !word_exists
-  end
-
-  def search_node_for_prefix(prefix, selected_word)
-    if select.has_key prefix
-      search_for_word(prefix, selected_word)
-    else
-      select[prefix] = [[1, selected_word]]
-    end
->>>>>>> 554aa1456d7dce0fd326e393622de33e3e8f6a2f
   end
 
   def count
