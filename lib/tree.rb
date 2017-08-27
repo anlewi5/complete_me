@@ -129,17 +129,3 @@ class Tree
     @count
   end
 end
-
-tree = Tree.new
-tree.insert('pizza')
-tree.insert('pize')
-tree.insert('pizzeria')
-tree.insert('pizzicato')
-
-tree.select('piz', 'pizzeria')
-tree.select('piz', 'pizzeria')
-tree.select('piz', 'pizza')
-tree.select('pi', 'pize')
-tree.select('pi', 'pize')
-tree.select('pi', 'pizzicato')
-p tree.suggest('pi')
