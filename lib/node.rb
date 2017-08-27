@@ -1,10 +1,10 @@
 class Node
   attr_accessor :word,
                 :term,
-                :select,
+                :selected,
                 :children
   def initialize
-    @select = {}
+    @selected = {}
     @word = false
     @term = term
     @children = {}

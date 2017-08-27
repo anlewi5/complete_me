@@ -55,8 +55,17 @@ class Tree
     last = letters.length
     start_node = prefix_finder(letters, last, @head)
     suggestions = []
+    suggestions << add_suggestions(start_node, prefix) if !start_node.selected.empty?
     suggestions << start_node.term if start_node.word
-    term_finder(start_node, suggestions)
+    term_finder(start_node, suggestions).flatten.uniq
+  end
+
+  def add_suggestions(start_node, prefix)
+    sorted_selection = start_node.selected[prefix].sort{|a| a[0]}
+    sorted_selection = sorted_selection.map do |array|
+      array[1]
+    end
+    sorted_selection.reverse
   end
 
   def prefix_finder(letters, last, current, count = 0)
@@ -84,11 +93,28 @@ class Tree
   end
 
   def select(prefix, selected_word)
-    count = 1
     letters = split_word(prefix)
     last = letters.length
     start_node = prefix_finder(letters, last, @head)
-    start_node[prefix] = []
+    start_node.selected[prefix] = search_for_selected_words(prefix, start_node, selected_word)
+  end
+
+  def search_for_selected_words(prefix, start_node, selected_word)
+    if start_node.selected.has_key?(prefix)
+      selection = times_selected(prefix, start_node, selected_word)
+    else
+      start_node.selected[prefix] = [[1, selected_word]]
+    end
+  end
+
+  def times_selected(prefix, start_node, selected_word)
+    start_node = start_node.selected[prefix].each do |pre|
+      if pre.include?(selected_word)
+        pre[0] += 1
+      elsif start_node.selected[prefix][-1] == pre
+        start_node.selected[prefix] << [0, selected_word]
+      end
+    end
   end
 
   def count
@@ -103,3 +129,17 @@ class Tree
     @count
   end
 end
+
+tree = Tree.new
+tree.insert('pizza')
+tree.insert('pize')
+tree.insert('pizzeria')
+tree.insert('pizzicato')
+
+tree.select('piz', 'pizzeria')
+tree.select('piz', 'pizzeria')
+tree.select('piz', 'pizza')
+tree.select('pi', 'pize')
+tree.select('pi', 'pize')
+tree.select('pi', 'pizzicato')
+p tree.suggest('pi')

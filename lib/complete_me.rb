@@ -85,6 +85,9 @@ class CompleteMe
   end
 
   def select(prefix, selected_word)
+    letters = split_word(prefix)
+    last_letter = letters.length
+    start_node = prefix_finder(letters, last, current, count)
     
   end
 
@@ -99,5 +102,4 @@ class CompleteMe
     end
     @count
   end
-
 end
