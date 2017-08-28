@@ -63,11 +63,11 @@ class CompleteMe
     letters = split_word(prefix)
     last = letters.length
     start_node = prefix_finder(letters, last, @head)
-    add_prefix_term_to_suggestions(start_node, prefix)
+    add_prefix_term_to_suggestions(start_node, prefix, suggestions)
     term_finder(start_node, suggestions).flatten.uniq
   end
 
-  def add_prefix_term_to_suggestions(start_node, prefix)
+  def add_prefix_term_to_suggestions(start_node, prefix, suggestions)
     suggestions << add_suggestions(start_node, prefix) if !start_node.selected.empty?
     suggestions << start_node.term if start_node.word
   end
