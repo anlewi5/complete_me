@@ -29,18 +29,26 @@ class CompleteMe
 
   def position_of_letters(total_word, letters, head, last, count, letter)
     if head.children.has_key?(letter) && count == last
-      head.children[letter].term = total_word
-      head.children[letter].word = true
-      @count += 1
+      has_key (letter, head)
     elsif head.children.has_key?(letter) && count != last
       insert_letters(total_word, letters, head.children[letter], last, count)
     elsif count != last
-      current = Node.new
-      head.children[letter] = current
-      insert_letters(total_word, letters, head.children[letter], last, count)
+      position_new_node(total_word, letters, head, last, count, letter)
     else
       last_letter(total_word, letter, head)
     end
+  end
+
+  def has_key(letter, head)
+    head.children[letter].term = total_word
+    head.children[letter].word = true
+    @count += 1
+  end
+
+  def position_new_node(total_word, letters, head, last, count, letter)
+    current = Node.new
+    head.children[letter] = current
+    insert_letters(total_word, letters, head.children[letter], last, count)
   end
 
   def last_letter(total_word, letter, head)
@@ -51,14 +59,17 @@ class CompleteMe
     @count += 1
   end
 
-  def suggest(prefix)
+  def suggest(prefix, suggestions = [])
     letters = split_word(prefix)
     last = letters.length
     start_node = prefix_finder(letters, last, @head)
-    suggestions = []
+    add_prefix_term_to_suggestions(start_node, prefix)
+    term_finder(start_node, suggestions).flatten.uniq
+  end
+
+  def add_prefix_term_to_suggestions(start_node, prefix)
     suggestions << add_suggestions(start_node, prefix) if !start_node.selected.empty?
     suggestions << start_node.term if start_node.word
-    term_finder(start_node, suggestions).flatten.uniq
   end
 
   def add_suggestions(start_node, prefix)
