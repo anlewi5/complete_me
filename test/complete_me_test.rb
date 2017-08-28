@@ -18,8 +18,26 @@ class CompleteMeTest < Minitest::Test
     assert_instance_of CompleteMe, cm
   end
 
+  def test_splits_word
+    assert_equal ["a"], split_word("a")
+    assert_equal ["anna"], split_word("anna")
+    assert_equal ["miguel"], split_word("miguel")
+  end
+
   def test_starting_count
     assert_equal 0, cm.count
+  end
+
+  def test_insert_letters
+
+  end
+
+  def test_position_of_letters
+
+  end
+
+  def test_last_letter
+
   end
 
   def test_inserts_single_word
@@ -35,6 +53,18 @@ class CompleteMeTest < Minitest::Test
   def test_counts_inserted_words
     insert_words(["pizza", "aardvark", "zombies", "a", "xylophones"])
     assert_equal 5, cm.count
+  end
+
+  def test_prefix_finder
+
+  end
+
+  def test_term_finder
+
+  end
+
+  def test_add_suggestions
+
   end
 
   def test_suggests_off_of_small_dataset
