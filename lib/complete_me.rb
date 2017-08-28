@@ -1,4 +1,5 @@
 require_relative './node'
+require 'csv'
 require 'pry'
 
 class CompleteMe
@@ -142,6 +143,7 @@ class CompleteMe
   end
 
   def populate_csv(file)
-    file.foreach{|line| insert(line([-1])}
+    CSV.foreach(file) {|line| insert(line[-1])}
+    puts "csv inserted"
   end
 end

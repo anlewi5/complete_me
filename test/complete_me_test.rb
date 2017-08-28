@@ -12,6 +12,7 @@ class CompleteMeTest < Minitest::Test
 
   def setup
     @cm = CompleteMe.new
+    @cma = CompleteMe.new
   end
 
   def test_complete_me_class_exists
@@ -48,6 +49,11 @@ class CompleteMeTest < Minitest::Test
   def test_inserts_multiple_words
     cm.populate("pizza\ndog\ncat")
     assert_equal 3, cm.count
+  end
+
+  def test_inserts_csv_addresses
+    @cma.populate_csv("./test/data/addresses.csv")
+    assert_equal 306013, @cma.count
   end
 
   def test_counts_inserted_words
@@ -118,5 +124,9 @@ class CompleteMeTest < Minitest::Test
   def large_word_list
     File.read("/usr/share/dict/words")
   end
+
+  # def address_list
+  #
+  # end
 
 end
