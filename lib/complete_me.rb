@@ -91,22 +91,22 @@ class CompleteMe
   end
 
   def term_finder(start_node, suggestions)
-      start_node.children.each_value do |value|
-        check_if_value_is_a_word(value, suggestions)
-      end
-      suggestions
+    start_node.children.each_value do |value|
+      check_if_value_is_a_word(value, suggestions)
     end
+    suggestions
+  end
 
-   def check_if_value_is_a_word(value, suggestions)
-      if value.word && !value.children.empty?
-        suggestions << value.term
-        term_finder(value, suggestions)
-      elsif !value.word
-        term_finder(value, suggestions)
-      else
-        suggestions << value.term
-      end
+  def check_if_value_is_a_word(value, suggestions)
+    if value.word && !value.children.empty?
+      suggestions << value.term
+      term_finder(value, suggestions)
+    elsif !value.word
+      term_finder(value, suggestions)
+    else
+      suggestions << value.term
     end
+  end
 
   def select(prefix, selected_word)
     letters = split_word(prefix)
