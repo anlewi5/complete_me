@@ -1,10 +1,7 @@
-gem 'simplecov'
-gem 'simplecov-json'
 require 'simplecov'
 SimpleCov.start
 # coverage/index.html to view
 
-gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/complete_me'
