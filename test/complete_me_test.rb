@@ -19,9 +19,9 @@ class CompleteMeTest < Minitest::Test
   end
 
   def test_splits_word
-    assert_equal ["a"], split_word("a")
-    assert_equal ["anna"], split_word("anna")
-    assert_equal ["miguel"], split_word("miguel")
+    assert_equal ["a"], cm.split_word("a")
+    assert_equal ["a","n", "n", "a"], cm.split_word("anna")
+    assert_equal ["m", "i", "g", "u", "e", "l"], cm.split_word("miguel")
   end
 
   def test_starting_count
@@ -64,6 +64,14 @@ class CompleteMeTest < Minitest::Test
   end
 
   def test_add_suggestions
+
+  end
+
+  def test_search_for_selected_words
+
+  end
+
+  def test_times_selected
 
   end
 
