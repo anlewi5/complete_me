@@ -2,5 +2,5 @@ source 'https://rubygems.org'
 
 gem 'rake'
 gem 'simplecov'
-gem 'simplecov-json'
 gem 'minitest'
+gem 'minitest-pride'
