@@ -119,15 +119,15 @@ class CompleteMe
     end
   end
 
-  # def times_selected(prefix, start_node, selected_word)
-  #   start_node = start_node.selected[prefix].each do |pre|
-  #     if pre.include?(selected_word)
-  #       pre[0] += 1
-  #     elsif start_node.selected[prefix][-1] == pre
-  #       start_node.selected[prefix] << [0, selected_word]
-  #     end
-  #   end
-  # end
+  def times_selected(prefix, start_node, selected_word)
+    start_node = start_node.selected[prefix].each do |pre|
+      if pre.include?(selected_word)
+        pre[0] += 1
+      elsif start_node.selected[prefix][-1] == pre
+        start_node.selected[prefix] << [0, selected_word]
+      end
+    end
+  end
 
   def count
     @count

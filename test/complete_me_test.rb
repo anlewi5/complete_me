@@ -101,6 +101,22 @@ class CompleteMeTest < Minitest::Test
     assert_equal ["wizardly", "williwaw"], cm.suggest("wi")
   end
 
+  def test_selects_off_of_medium_dataset
+    cm.insert("wizard")
+    cm.insert("wizardly")
+    cm.insert("williwaw")
+    cm.select("wiz", "wizard")
+    cm.select("wiz", "wizardly")
+    assert_equal ["wizard", "wizardly", "williwaw"], cm.suggest("wi")
+  end
+
+  def test_selects_off_of_medium_dataset_with_repeated_select
+    cm.populate(medium_word_list)
+    cm.select("wi", "wizardly")
+    cm.select("wi", "wizardly")
+    assert_equal ["wizardly", "williwaw"], cm.suggest("wi")
+  end
+
   def test_works_with_large_dataset
     cm.populate(large_word_list)
     assert_equal ["doggerel", "doggereler", "doggerelism", "doggerelist", "doggerelize", "doggerelizer"], cm.suggest("doggerel").sort
