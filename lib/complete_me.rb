@@ -29,7 +29,7 @@ class CompleteMe
 
   def position_of_letters(total_word, letters, head, last, count, letter)
     if head.children.has_key?(letter) && count == last
-      has_key (letter, head)
+      has_key(letter, head)
     elsif head.children.has_key?(letter) && count != last
       insert_letters(total_word, letters, head.children[letter], last, count)
     elsif count != last
