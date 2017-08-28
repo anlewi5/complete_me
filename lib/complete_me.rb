@@ -102,7 +102,7 @@ class CompleteMe
 
   def search_for_selected_words(prefix, start_node, selected_word)
     if start_node.selected.has_key?(prefix)
-      selection = times_selected(prefix, start_node, selected_word)
+      times_selected(prefix, start_node, selected_word)
     else
       start_node.selected[prefix] = [[1, selected_word]]
     end
