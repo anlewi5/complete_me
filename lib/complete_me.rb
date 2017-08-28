@@ -91,7 +91,13 @@ class CompleteMe
   end
 
   def term_finder(start_node, suggestions)
-    start_node.children.each_value do |value|
+      start_node.children.each_value do |value|
+        check_if_value_is_a_word(value, suggestions)
+      end
+      suggestions
+    end
+
+   def check_if_value_is_a_word(value, suggestions)
       if value.word && !value.children.empty?
         suggestions << value.term
         term_finder(value, suggestions)
@@ -101,8 +107,6 @@ class CompleteMe
         suggestions << value.term
       end
     end
-    suggestions
-  end
 
   def select(prefix, selected_word)
     letters = split_word(prefix)
@@ -143,6 +147,5 @@ class CompleteMe
 
   def populate_csv(file)
     CSV.foreach(file) {|line| insert(line[-1])}
-    puts "csv inserted"
   end
 end

@@ -1,6 +1,6 @@
 require 'simplecov'
 SimpleCov.start do
-  add_filter "./test/node_test"
+  add_filter "/node_test/"
 end
 
 require 'minitest/autorun'
