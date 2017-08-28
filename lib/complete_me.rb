@@ -140,4 +140,8 @@ class CompleteMe
     end
     @count
   end
+
+  def populate_csv(file)
+    file.foreach{|line| insert(line([-1])}
+  end
 end
