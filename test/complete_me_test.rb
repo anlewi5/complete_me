@@ -1,9 +1,4 @@
-gem 'simplecov'
-require 'simplecov'
-SimpleCov.start
-
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require_relative '../lib/complete_me'
 
 class CompleteMeTest < Minitest::Test
