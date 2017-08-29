@@ -25,15 +25,15 @@ class CompleteMeTest < Minitest::Test
   end
 
   def test_insert_letters
-    
+    assert_equal 1,cm.insert_letters('', ['a', 'b', 'c'], cm.head, 3, count = 0, letter = nil )
   end
 
   def test_position_of_letters
-
+    assert 1, cm.position_of_letters('a', ['b', 'c'], cm.head, 3, 1, 'a')
   end
 
   def test_last_letter
-
+    assert_equal 1, cm.last_letter('ab', 'c', cm.head)
   end
 
   def test_inserts_single_word
