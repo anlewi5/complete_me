@@ -25,7 +25,7 @@ class CompleteMeTest < Minitest::Test
   end
 
   def test_insert_letters
-
+    
   end
 
   def test_position_of_letters
