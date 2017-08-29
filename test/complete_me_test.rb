@@ -25,7 +25,7 @@ class CompleteMeTest < Minitest::Test
   end
 
   def test_insert_letters
-    
+
   end
 
   def test_position_of_letters
@@ -61,25 +61,25 @@ class CompleteMeTest < Minitest::Test
     assert_equal 5, cm.count
   end
 
-  def test_prefix_finder
-
-  end
-
-  def test_term_finder
-
-  end
-
-  def test_add_suggestions
-
-  end
-
-  def test_search_for_selected_words
-
-  end
-
-  def test_times_selected
-
-  end
+  # def test_prefix_finder
+  #   assert_equal 5, cm.prefix_finder(["a","n", "n", "a"], 4, @head)
+  # end
+  #
+  # def test_term_finder
+  #
+  # end
+  #
+  # def test_add_suggestions
+  #
+  # end
+  #
+  # def test_search_for_selected_words
+  #
+  # end
+  #
+  # def test_times_selected
+  #
+  # end
 
   def test_suggests_off_of_small_dataset
     insert_words(["pizza", "aardvark", "zombies", "a", "xylophones"])

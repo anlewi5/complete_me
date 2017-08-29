@@ -1,5 +1,6 @@
 require_relative './node'
 require 'csv'
+require 'pry'
 
 class CompleteMe
   attr_accessor :head
@@ -21,6 +22,7 @@ class CompleteMe
   end
 
   def insert_letters(total_word, letters, head, last, count = 0, letter = nil )
+    binding.pry
     count += 1
     letter = letters.shift
     total_word << letter
