@@ -46,11 +46,6 @@ class CompleteMeTest < Minitest::Test
     assert_equal 3, cm.count
   end
 
-  def test_inserts_csv_addresses_small
-    cma.populate_csv("./test/data/address.csv")
-    assert_equal 2, cma.count
-  end
-
   def test_inserts_csv_addresses_large
     cma.populate_csv("./test/data/addresses.csv")
     assert_equal 306013, cma.count
