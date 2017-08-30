@@ -1,6 +1,5 @@
 require_relative './node'
 require 'csv'
-require 'pry'
 
 class CompleteMe
   attr_accessor :head
@@ -26,6 +25,7 @@ class CompleteMe
     letter = letters.shift
     total_word << letter
     position_of_letters(total_word, letters, head, last, count, letter)
+    count
   end
 
   def position_of_letters(total_word, letters, head, last, count, letter)

@@ -14,7 +14,7 @@ class CompleteMeTest < Minitest::Test
     assert_instance_of CompleteMe, cm
   end
 
-  def test_splits_word
+  def test_splits_word_into_array_of_strings
     assert_equal ["a"], cm.split_word("a")
     assert_equal ["a","n", "n", "a"], cm.split_word("anna")
     assert_equal ["m", "i", "g", "u", "e", "l"], cm.split_word("miguel")
@@ -24,12 +24,14 @@ class CompleteMeTest < Minitest::Test
     assert_equal 0, cm.count
   end
 
-  def test_insert_letters
-    assert_equal 1,cm.insert_letters('', ['a', 'b', 'c'], cm.head, 3)
+  def test_insert_letters_increases_count_by_one
+    assert_equal 1, cm.insert_letters('', ['a'], cm.head, 1)
+    assert_equal 1, cm.insert_letters('', ['a', 'b', 'c'], cm.head, 3)
   end
 
   def test_position_of_letters
-    assert 1, cm.position_of_letters('a', ['b', 'c'], cm.head, 3, 1, 'a')
+    assert_equal 1, cm.position_of_letters('a', nil, cm.head, 1, 1, 'a')
+    assert_equal 2, cm.position_of_letters('a', ['b', 'c'], cm.head, 1, 1, 'a')
   end
 
   def test_last_letter
@@ -44,11 +46,6 @@ class CompleteMeTest < Minitest::Test
   def test_inserts_multiple_words
     cm.populate("pizza\ndog\ncat")
     assert_equal 3, cm.count
-  end
-
-  def test_inserts_csv_addresses_large
-    cma.populate_csv("./test/data/addresses.csv")
-    assert_equal 306013, cma.count
   end
 
   def test_counts_inserted_words
@@ -109,7 +106,7 @@ class CompleteMeTest < Minitest::Test
     assert_equal ["wizardly", "williwaw"], cm.suggest("wi")
   end
 
-  def test_selects_off_of_medium_dataset
+  def test_selects_off_of_multiple_selects_for_same_prefix
     cm.insert("wizard")
     cm.insert("wizardly")
     cm.insert("williwaw")
@@ -131,6 +128,20 @@ class CompleteMeTest < Minitest::Test
     cm.select("doggerel", "doggerelist")
     assert_equal "doggerelist", cm.suggest("doggerel").first
   end
+
+  #the following tests are for denver addresses:
+
+  def test_inserts_single_csv_address
+    cma.populate_csv("./test/data/address.csv")
+    assert_equal 1, cma.count
+  end
+
+  def test_inserts_csv_addresses_large
+    cma.populate_csv("./test/data/addresses.csv")
+    assert_equal 306013, cma.count
+  end
+
+  # the following are methods used within above tests:
 
   def insert_words(words)
     cm.populate(words.join("\n"))
