@@ -46,10 +46,10 @@ class CompleteMeTest < Minitest::Test
     assert_equal 3, cm.count
   end
 
-  # def test_inserts_csv_addresses_large
-  #   cma.populate_csv("./test/data/addresses.csv")
-  #   assert_equal 306013, cma.count
-  # end
+  def test_inserts_csv_addresses_large
+    cma.populate_csv("./test/data/addresses.csv")
+    assert_equal 306013, cma.count
+  end
 
   def test_counts_inserted_words
     insert_words(["pizza", "aardvark", "zombies", "a", "xylophones"])
@@ -62,26 +62,26 @@ class CompleteMeTest < Minitest::Test
     assert_instance_of Node, cm.prefix_finder(["a"], 1, cm.head)
   end
 
-  def test_term_finder    
+  def test_term_finder
     assert_equal [], cm.term_finder(cm.head, [])
   end
 
-#not passing
-  def test_add_suggestions
-    insert_words(["pizza", "aardvark", "zombies", "a", "xylophones"])
-    assert_equal 5, cm.add_suggestions(cm.head, "piz")
+  def test_add_suggestions_is_based_on_selections
+    insert_words(["pizza"])
+    cm.select("p", "pizza")
+
+    assert_equal ["pizza"], cm.add_suggestions(cm.head.children["p"], "p")
   end
 
   def test_search_for_selected_words
     assert_equal [[1, "piz"]], cm.search_for_selected_words("piz", cm.head, "piz")
   end
 
-#not passing
   def test_times_selected
     cm.populate(medium_word_list)
-    cm.select("wi", "wizardly")
+    cm.select("w", "wizardly")
 
-    assert_equal 5, cm.times_selected("wi", cm.head, "wizardly")
+    assert_equal [[2, "wizardly"]], cm.times_selected("w", cm.head.children["w"], "wizardly")
   end
 
   def test_suggests_off_of_small_dataset
